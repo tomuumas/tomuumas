@@ -12,9 +12,22 @@
                 down: down,
                 right: right,
                 fade: fade
-            }, optionSet = [], queue = [], execute = true;
+            },
+            defaultOption = {
+                interval: 5
+            },
+            optionSet = [], queue = [], execute = true;
             
             function _setOption(option) {
+                if (typeof(option) === 'undefined') {
+                    option = defaultOption;
+                } else {
+                    for (prop in defaultOption) {
+                        if (!option.hasOwnProperty(prop)) {
+                            option[prop] = defaultOption[prop];
+                        }
+                    }
+                }
                 optionSet.push(option);
             }
             
@@ -26,10 +39,10 @@
             
             function _down(option) {
                 execute = false;
-                var top, counter = count();
+                var top, counter = count(option.interval);
                 var id = setInterval(function() {
                     top = getStyle().top === 'auto' ? 0 : getStyle().top;
-                    target.style.top = (parseInt(top) + 5) + 'px';
+                    target.style.top = (parseInt(top) + option.interval) + 'px';
                     if (counter() > option.dist) {
                         clearInterval(id);
                         execute = true;
@@ -45,10 +58,10 @@
             
             function _right(option) {
                 execute = false;
-                var right, counter = count();
+                var right, counter = count(option.interval);
                 var id = setInterval(function() {
                     left = getStyle().left === 'auto' ? 0 : getStyle().left;
-                    target.style.left = (parseInt(left) + 5) + 'px';
+                    target.style.left = (parseInt(left) + option.interval) + 'px';
                     if (counter() > option.dist) {
                         clearInterval(id);
                         execute = true;
@@ -70,10 +83,10 @@
                 return doc.currentStyle || doc.defaultView.getComputedStyle(target, '');
             }
             
-            function count() {
+            function count(interval) {
                 var count = 0;
                 return function() {
-                    count += 5;
+                    count += interval;
                     return count;
                 };
             }
