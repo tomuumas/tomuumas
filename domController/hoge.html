@@ -1,0 +1,21 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+    <link rel="stylesheet" href="hoge.css" type="text/css" />
+	<title>hoge</title>
+</head>
+
+<body>
+<div id="hoge" class="hoge">
+hoge
+</div>
+
+<script type="text/javascript" src="domController.js" /></script>
+<script>
+domController('hoge')
+.down({dist: 100})
+.right({dist: 200})
+.fade();
+</script>
+</body>
+</html>
